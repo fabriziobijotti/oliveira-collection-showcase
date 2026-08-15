@@ -20,7 +20,7 @@ export function Presentao() {
             <BolsasCarrossel />
             <span className="absolute -top-4 left-6 z-10 inline-flex items-center gap-2 rounded-full bg-card px-4 py-2 text-[11px] uppercase tracking-[0.18em] text-primary shadow-[var(--shadow-soft)]">
               <Gift size={14} strokeWidth={1.5} aria-hidden />
-              Brinde exclusivo
+              🎁 Presente exclusivo de lançamento
             </span>
           </div>
         </Reveal>
@@ -28,10 +28,11 @@ export function Presentao() {
         <Reveal delay={120}>
           <p className="text-xs uppercase tracking-[0.22em] text-primary">{promoConfig.nome}</p>
           <h2 className="mt-4 font-display text-3xl leading-tight text-foreground sm:text-4xl lg:text-5xl">
-            {promoConfig.titulo}
+            Seu look novo vem com um presente especial
           </h2>
           <p className="mt-5 font-display text-xl text-foreground/85 sm:text-2xl">
-            {promoConfig.subtitulo}
+            Comprou R$ 250 em peças da nova coleção, ganhou a Mini Bolsa exclusiva com alça inclusa
+            (disponível em 6 cores).
           </p>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">
             {promoConfig.texto}
@@ -46,15 +47,15 @@ export function Presentao() {
           <WhatsAppButton
             className="mt-8"
             size="lg"
-            evento="promo_quero_presente"
-            mensagem={siteConfig.mensagens.presente}
+            evento="promo_quero_mini_bolsa"
+            mensagem={siteConfig.mensagens.miniBolsa}
           >
             <ShoppingBag size={18} strokeWidth={1.5} aria-hidden />
-            {promoConfig.ctaPrincipal}
+            🎁 Quero garantir minha Mini Bolsa
           </WhatsAppButton>
 
           <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
-            {promoConfig.observacao} {promoConfig.validade}
+            Promoção exclusiva de lançamento • Válida enquanto durarem os estoques do brinde.
           </p>
 
           <Accordion type="single" collapsible className="mt-6 w-full">
@@ -68,7 +69,9 @@ export function Presentao() {
                     <li key={r}>{r}</li>
                   ))}
                 </ul>
-                <p className="mt-3 text-sm text-muted-foreground">{promoConfig.validade}</p>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Promoção exclusiva de lançamento • Válida enquanto durarem os estoques do brinde.
+                </p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -95,7 +98,7 @@ export function PresentaoChamada() {
           <WhatsAppButton
             className="shrink-0"
             evento="promo_montar_look"
-            mensagem={siteConfig.mensagens.presente}
+            mensagem={siteConfig.mensagens.miniBolsa}
           >
             {promoConfig.ctaGaleria}
           </WhatsAppButton>
