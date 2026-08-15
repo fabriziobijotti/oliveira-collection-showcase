@@ -4,7 +4,6 @@ import { PromoBar } from "@/components/landing/PromoBar";
 import { Presentao, PresentaoChamada } from "@/components/landing/Presentao";
 import { Hero } from "@/components/landing/Hero";
 import { Colecao } from "@/components/landing/Colecao";
-import { Galeria } from "@/components/landing/Galeria";
 
 import { Consultoria } from "@/components/landing/Consultoria";
 import { Novidades } from "@/components/landing/Novidades";
@@ -62,13 +61,12 @@ function Index() {
         <Hero />
         <Colecao />
         <Presentao />
-        <Galeria />
         <PresentaoChamada />
         <Consultoria />
         <Novidades />
         <Entrega />
         <Beneficios />
-        
+
         <CtaFinal />
         <Faq />
       </main>
