@@ -12,11 +12,8 @@ export function Consultoria() {
             Encontre o look que combina com você
           </h2>
           <p className="mt-6 text-base leading-relaxed text-foreground/80">
-            Não sabe qual modelo, tamanho ou combinação escolher?
-          </p>
-          <p className="mt-3 text-base leading-relaxed text-foreground/80">
-            Conte para nossa equipe o que você procura. Vamos ajudar você a encontrar peças que
-            combinem com seu estilo, sua rotina e a ocasião que está planejando.
+            Dúvidas sobre combinações ou qual tamanho veste melhor? Nossa consultora ajuda você a
+            montar o look ideal pelo WhatsApp ou separa na arara para você provar na loja física.
           </p>
           <WhatsAppButton
             className="mt-9"

@@ -32,6 +32,8 @@ export const siteConfig = {
       "Olá! Gostaria de ajuda de uma consultora para escolher um look da coleção Primavera–Verão.",
     presente:
       "Olá! Vi a promoção da coleção Primavera–Verão e quero saber quais peças estão disponíveis para ganhar a Mini Bolsa exclusiva.",
+    miniBolsa:
+      "Olá! Vi a promoção da Primavera–Verão e quero garantir minha Mini Bolsa exclusiva nas compras a partir de R$ 250!",
     entrega:
       "Olá! Gostaria de consultar a entrega para minha cidade e ver os modelos disponíveis da coleção Primavera–Verão.",
   },
@@ -44,7 +46,7 @@ export const siteConfig = {
  * ============================================================
  */
 export const promoConfig = {
-  nome: "PRESENTÃO PRIMAVERA–VERÃO",
+  nome: "🎁 PRESENTE EXCLUSIVO DE LANÇAMENTO",
   valorMinimo: "R$ 250",
   brinde: "Mini Bolsa exclusiva",
 
@@ -52,23 +54,24 @@ export const promoConfig = {
   bannerCta: "Ver coleção",
   selo: "Compre R$ 250 e ganhe uma Mini Bolsa",
 
-  titulo: "Seu look novo vem com presente",
-  subtitulo: "Comprou R$ 250 em looks, ganhou uma Mini Bolsa exclusiva.",
+  titulo: "Seu look novo vem com um presente especial",
+  subtitulo:
+    "Comprou R$ 250 em peças da nova coleção, ganhou a Mini Bolsa exclusiva com alça inclusa (disponível em 6 cores).",
   texto:
     "Escolha suas peças favoritas da Nova Coleção Primavera–Verão e, ao completar R$ 250 em compras, leve uma Mini Bolsa exclusiva para deixar suas produções ainda mais especiais.",
   complemento:
-    "Nas compras a partir de R$ 250 em peças da Nova Coleção Primavera–Verão, você ganha uma Mini Bolsa exclusiva para completar seus looks.",
+    "Promoção exclusiva de lançamento • Válida enquanto durarem os estoques do brinde.",
   cores:
     "A Mini Bolsa está disponível em 6 cores: off-white, bege, rosa, verde, vermelha e preta — e acompanha a alça.",
   observacao:
-    "Promoção válida enquanto durarem os estoques. Consulte as condições e a disponibilidade do brinde.",
-  ctaPrincipal: "Quero garantir meu presente",
+    "Promoção exclusiva de lançamento • Válida enquanto durarem os estoques do brinde.",
+  ctaPrincipal: "🎁 Quero garantir minha Mini Bolsa",
 
   chamadaGaleria: "Está quase lá! Complete R$ 250 em compras e ganhe sua Mini Bolsa exclusiva.",
   ctaGaleria: "Montar meu look pelo WhatsApp",
 
   /** Período de validade da campanha (editável) */
-  validade: "Campanha válida de 0?/0? a 0?/0?.",
+  validade: "Válida enquanto durarem os estoques do brinde.",
 
   regrasTitulo: "Confira as condições do presentão",
   regras: [
