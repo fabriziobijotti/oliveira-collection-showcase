@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { leadSchema, type Lead } from "@/lib/leads.schemas";
+import { leadSchema } from "@/lib/leads.schemas";
 import { saveLead } from "@/lib/leads.functions";
 import { Reveal } from "./Reveal";
 
