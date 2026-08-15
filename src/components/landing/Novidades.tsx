@@ -192,6 +192,14 @@ export function Novidades() {
                   )}
                 </div>
 
+                {erroEnvio && (
+                  <div className="sm:col-span-2">
+                    <p className="rounded-xl bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                      {erroEnvio}
+                    </p>
+                  </div>
+                )}
+
                 <div className="sm:col-span-2">
                   <button
                     type="submit"
