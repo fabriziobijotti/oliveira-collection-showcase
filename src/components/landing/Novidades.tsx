@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from "react";
-import { z } from "zod";
+import { useServerFn } from "@tanstack/react-start";
+import { leadSchema, type Lead } from "@/lib/leads.schemas";
+import { saveLead } from "@/lib/leads.functions";
 import { Reveal } from "./Reveal";
 
 /** Máscara de telefone brasileiro: (00) 00000-0000 */
@@ -10,31 +12,6 @@ function mascararTelefone(valor: string) {
   if (d.length <= 10) return d.replace(/^(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
   return d.replace(/^(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
 }
-
-const leadSchema = z.object({
-  nome: z
-    .string()
-    .trim()
-    .min(2, { message: "Informe seu nome." })
-    .max(100, { message: "Nome muito longo." }),
-  whatsapp: z
-    .string()
-    .trim()
-    .regex(/^\(\d{2}\) \d{4,5}-\d{4}$/, { message: "Informe um WhatsApp válido com DDD." }),
-  email: z
-    .string()
-    .trim()
-    .max(255)
-    .email({ message: "E-mail inválido." })
-    .optional()
-    .or(z.literal("")),
-  interesse: z.string().max(60).optional(),
-  consentimento: z.literal(true, {
-    errorMap: () => ({ message: "É necessário autorizar o contato." }),
-  }),
-});
-
-export type Lead = z.infer<typeof leadSchema>;
 
 const opcoes = [
   "Vestidos",
