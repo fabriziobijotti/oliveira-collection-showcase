@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from "react";
-import { z } from "zod";
+import { useServerFn } from "@tanstack/react-start";
+import { leadSchema } from "@/lib/leads.schemas";
+import { saveLead } from "@/lib/leads.functions";
 import { Reveal } from "./Reveal";
 
 /** Máscara de telefone brasileiro: (00) 00000-0000 */
@@ -11,31 +13,6 @@ function mascararTelefone(valor: string) {
   return d.replace(/^(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
 }
 
-const leadSchema = z.object({
-  nome: z
-    .string()
-    .trim()
-    .min(2, { message: "Informe seu nome." })
-    .max(100, { message: "Nome muito longo." }),
-  whatsapp: z
-    .string()
-    .trim()
-    .regex(/^\(\d{2}\) \d{4,5}-\d{4}$/, { message: "Informe um WhatsApp válido com DDD." }),
-  email: z
-    .string()
-    .trim()
-    .max(255)
-    .email({ message: "E-mail inválido." })
-    .optional()
-    .or(z.literal("")),
-  interesse: z.string().max(60).optional(),
-  consentimento: z.literal(true, {
-    errorMap: () => ({ message: "É necessário autorizar o contato." }),
-  }),
-});
-
-export type Lead = z.infer<typeof leadSchema>;
-
 const opcoes = [
   "Vestidos",
   "Conjuntos",
@@ -45,15 +22,8 @@ const opcoes = [
   "Ainda não sei",
 ];
 
-/**
- * TODO (integração futura): enviar o lead para webhook, banco de dados
- * ou plataforma de gestão de leads dentro desta função.
- */
-async function enviarLead(lead: Lead) {
-  console.info("Lead capturado:", lead);
-}
-
 export function Novidades() {
+  const submitLead = useServerFn(saveLead);
   const [valores, setValores] = useState({
     nome: "",
     whatsapp: "",
@@ -62,6 +32,7 @@ export function Novidades() {
     consentimento: false,
   });
   const [erros, setErros] = useState<Record<string, string>>({});
+  const [erroEnvio, setErroEnvio] = useState<string | null>(null);
   const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
 
@@ -78,10 +49,16 @@ export function Novidades() {
       return;
     }
     setErros({});
+    setErroEnvio(null);
     setEnviando(true);
-    await enviarLead(resultado.data);
-    setEnviando(false);
-    setEnviado(true);
+    try {
+      await submitLead({ data: resultado.data });
+      setEnviado(true);
+    } catch {
+      setErroEnvio("Não foi possível enviar seu cadastro. Tente novamente.");
+    } finally {
+      setEnviando(false);
+    }
   }
 
   const inputClass =
@@ -214,6 +191,14 @@ export function Novidades() {
                     <p className="mt-1.5 text-xs text-destructive">{erros["consentimento"]}</p>
                   )}
                 </div>
+
+                {erroEnvio && (
+                  <div className="sm:col-span-2">
+                    <p className="rounded-xl bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                      {erroEnvio}
+                    </p>
+                  </div>
+                )}
 
                 <div className="sm:col-span-2">
                   <button
