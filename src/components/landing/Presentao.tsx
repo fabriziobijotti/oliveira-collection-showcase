@@ -41,7 +41,7 @@ export function Presentao() {
             mensagem={siteConfig.mensagens.miniBolsa}
           >
             <ShoppingBag size={18} strokeWidth={1.5} aria-hidden />
-            🎁 Quero garantir minha Mini Bolsa
+            Quero garantir minha Mini Bolsa
           </WhatsAppButton>
         </Reveal>
       </div>
