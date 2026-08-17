@@ -3,7 +3,7 @@ import { Reveal } from "./Reveal";
 
 import imgVestidos from "@/assets/look-vestidos.png.asset.json";
 import imgConjuntos from "@/assets/look-conjuntos.png.asset.json";
-import imgCasual from "@/assets/look-casual.png.asset.json";
+import imgCasual from "@/assets/look-casual-rosa.jpg.asset.json";
 import imgBlusas from "@/assets/look-blusas.png.asset.json";
 import imgVersateis from "@/assets/look-versateis.png.asset.json";
 import imgMacacao from "@/assets/look-macacao.png.asset.json";
@@ -24,7 +24,7 @@ const looks = [
   {
     nome: "Looks casuais",
     imagem: imgCasual.url,
-    alt: "Looks casuais da coleção Primavera–Verão",
+    alt: "Look casual rosa de bolinha com decote halter e mini bolsa de palha",
     texto: "Peças descomplicadas para o dia a dia em Rio Preto, sem perder o charme e a feminilidade.",
   },
   {
