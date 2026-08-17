@@ -65,7 +65,7 @@ export const promoConfig = {
     "A Mini Bolsa está disponível em 6 cores: off-white, bege, rosa, verde, vermelha e preta — e acompanha a alça.",
   observacao:
     "Promoção exclusiva de lançamento • Válida enquanto durarem os estoques do brinde.",
-  ctaPrincipal: "🎁 Quero garantir minha Mini Bolsa",
+  ctaPrincipal: "Quero garantir minha Mini Bolsa",
 
   chamadaGaleria: "Está quase lá! Complete R$ 250 em compras e ganhe sua Mini Bolsa exclusiva.",
   ctaGaleria: "Montar meu look pelo WhatsApp",
