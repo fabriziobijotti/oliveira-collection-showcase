@@ -1,5 +1,5 @@
-import claras from "@/assets/bolsas-claras-estudio.jpg.asset.json";
-import escuras from "@/assets/bolsas-escuras.jpg.asset.json";
+import claras from "@/assets/bolsas-claras-vertical.jpg.asset.json";
+import escuras from "@/assets/bolsas-escuras-vertical.jpg.asset.json";
 import offwhite from "@/assets/bolsa-offwhite.jpg.asset.json";
 import bege from "@/assets/bolsa-bege.jpg.asset.json";
 import rosa from "@/assets/bolsa-rosa.jpg.asset.json";
@@ -16,8 +16,8 @@ import {
 
 /** EDITÁVEL: fotos da Mini Bolsa exibidas no carrossel do presentão. */
 const fotos = [
-  { src: claras.url, alt: "Mini Bolsas nas cores off-white, rosa pastel, bege e verde pistache com fivelas douradas sobre bancada de mármore", legenda: "Cores claras" },
-  { src: escuras.url, alt: "Mini Bolsas nas cores preta e vermelha", legenda: "CORES ESCURAS" },
+  { src: claras.url, alt: "Mini Bolsas nas cores off-white, rosa, bege e verde pistache com fivelas douradas", legenda: "Cores claras" },
+  { src: escuras.url, alt: "Mini Bolsas nas cores preta e vermelha com fivelas douradas", legenda: "Cores escuras" },
   { src: offwhite.url, alt: "Mini Bolsa off-white com fivela dourada", legenda: "Off-white" },
   { src: bege.url, alt: "Mini Bolsa bege com fivela dourada", legenda: "Bege" },
   { src: rosa.url, alt: "Mini Bolsa rosa com fivela dourada", legenda: "Rosa" },
