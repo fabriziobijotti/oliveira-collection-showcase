@@ -94,12 +94,24 @@ export function Novidades() {
         <Reveal delay={120}>
           <div className="mt-10 rounded-[2rem] border border-border bg-card p-7 shadow-[var(--shadow-soft)] md:p-10">
             {enviado ? (
-              <p
-                role="status"
-                className="py-10 text-center font-display text-xl leading-relaxed text-foreground"
-              >
-                Cadastro realizado com sucesso! Em breve, nossa equipe entrará em contato com você.
-              </p>
+              <div className="py-10 text-center">
+                <p
+                  role="status"
+                  className="font-display text-xl leading-relaxed text-foreground"
+                >
+                  Tudo certo! Abrimos o WhatsApp com sua mensagem pronta — é só tocar em enviar.
+                </p>
+                {linkWhatsApp && (
+                  <a
+                    href={linkWhatsApp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-base font-medium text-primary-foreground shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90"
+                  >
+                    Abrir conversa no WhatsApp
+                  </a>
+                )}
+              </div>
             ) : (
               <form onSubmit={onSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
                 <div className="sm:col-span-1">
