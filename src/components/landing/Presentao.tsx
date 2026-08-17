@@ -20,7 +20,8 @@ export function Presentao() {
         </Reveal>
 
         <Reveal delay={120}>
-          <p className="text-xs uppercase tracking-[0.22em] text-primary">
+          <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-primary">
+            <Gift size={14} strokeWidth={1.5} aria-hidden />
             PRESENTE EXCLUSIVO DE LANÇAMENTO
           </p>
           <h2 className="mt-4 font-display text-3xl leading-tight text-foreground sm:text-4xl lg:text-5xl">
