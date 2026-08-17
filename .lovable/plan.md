@@ -11,7 +11,6 @@ Hoje o formulário "Receba as novidades" só grava o lead no banco e mostra uma 
 ```text
 Olá! Sou a Maria e me cadastrei pelo site da Sheila Oliveira Store.
 Tenho interesse em: Vestidos.
-Meu WhatsApp: (17) 99999-0000.
 Gostaria de receber as novidades da coleção Primavera–Verão.
 ```
 
