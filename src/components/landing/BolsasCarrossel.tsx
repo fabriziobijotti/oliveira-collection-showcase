@@ -1,5 +1,5 @@
-import claras from "@/assets/bolsas-claras-estudio.jpg.asset.json";
-import escuras from "@/assets/bolsas-escuras.jpg.asset.json";
+import claras from "@/assets/bolsas-claras-vertical.jpg.asset.json";
+import escuras from "@/assets/bolsas-escuras-vertical.jpg.asset.json";
 import offwhite from "@/assets/bolsa-offwhite.jpg.asset.json";
 import bege from "@/assets/bolsa-bege.jpg.asset.json";
 import rosa from "@/assets/bolsa-rosa.jpg.asset.json";
