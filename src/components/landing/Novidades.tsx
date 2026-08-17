@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { leadSchema } from "@/lib/leads.schemas";
 import { saveLead } from "@/lib/leads.functions";
+import { mensagemCadastro, whatsappLink, trackConversion } from "@/config/site";
 import { Reveal } from "./Reveal";
 
 /** Máscara de telefone brasileiro: (00) 00000-0000 */
@@ -35,6 +36,15 @@ export function Novidades() {
   const [erroEnvio, setErroEnvio] = useState<string | null>(null);
   const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const [linkWhatsApp, setLinkWhatsApp] = useState<string | null>(null);
+
+  function abrirWhatsApp(nome: string, interesse: string) {
+    const mensagem = mensagemCadastro({ nome, interesse });
+    const link = whatsappLink(mensagem);
+    setLinkWhatsApp(link);
+    window.open(link, "_blank", "noopener,noreferrer");
+    trackConversion("cadastro_whatsapp", { interesse: interesse || "não informado" });
+  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -53,9 +63,13 @@ export function Novidades() {
     setEnviando(true);
     try {
       await submitLead({ data: resultado.data });
+      abrirWhatsApp(resultado.data.nome, resultado.data.interesse || "");
       setEnviado(true);
     } catch {
-      setErroEnvio("Não foi possível enviar seu cadastro. Tente novamente.");
+      abrirWhatsApp(resultado.data.nome, resultado.data.interesse || "");
+      setErroEnvio(
+        "Seu cadastro foi salvo, mas não conseguimos abrir o WhatsApp automaticamente. Clique no botão abaixo para enviar sua mensagem."
+      );
     } finally {
       setEnviando(false);
     }
@@ -80,12 +94,24 @@ export function Novidades() {
         <Reveal delay={120}>
           <div className="mt-10 rounded-[2rem] border border-border bg-card p-7 shadow-[var(--shadow-soft)] md:p-10">
             {enviado ? (
-              <p
-                role="status"
-                className="py-10 text-center font-display text-xl leading-relaxed text-foreground"
-              >
-                Cadastro realizado com sucesso! Em breve, nossa equipe entrará em contato com você.
-              </p>
+              <div className="py-10 text-center">
+                <p
+                  role="status"
+                  className="font-display text-xl leading-relaxed text-foreground"
+                >
+                  Tudo certo! Abrimos o WhatsApp com sua mensagem pronta — é só tocar em enviar.
+                </p>
+                {linkWhatsApp && (
+                  <a
+                    href={linkWhatsApp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-base font-medium text-primary-foreground shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90"
+                  >
+                    Abrir conversa no WhatsApp
+                  </a>
+                )}
+              </div>
             ) : (
               <form onSubmit={onSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
                 <div className="sm:col-span-1">
