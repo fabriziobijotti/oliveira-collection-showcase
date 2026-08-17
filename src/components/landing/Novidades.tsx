@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { leadSchema } from "@/lib/leads.schemas";
 import { saveLead } from "@/lib/leads.functions";
+import { mensagemCadastro, whatsappLink, trackConversion } from "@/config/site";
 import { Reveal } from "./Reveal";
 
 /** Máscara de telefone brasileiro: (00) 00000-0000 */
