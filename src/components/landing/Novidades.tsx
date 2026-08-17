@@ -63,10 +63,10 @@ export function Novidades() {
     setEnviando(true);
     try {
       await submitLead({ data: resultado.data });
-      abrirWhatsApp(resultado.data.nome, resultado.data.interesse);
+      abrirWhatsApp(resultado.data.nome, resultado.data.interesse || "");
       setEnviado(true);
     } catch {
-      abrirWhatsApp(resultado.data.nome, resultado.data.interesse);
+      abrirWhatsApp(resultado.data.nome, resultado.data.interesse || "");
       setErroEnvio(
         "Seu cadastro foi salvo, mas não conseguimos abrir o WhatsApp automaticamente. Clique no botão abaixo para enviar sua mensagem."
       );
