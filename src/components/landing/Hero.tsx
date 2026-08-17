@@ -1,5 +1,5 @@
 import { Gift } from "lucide-react";
-import heroImg from "@/assets/hero-look.jpg.asset.json";
+import heroImg from "@/assets/hero-look-nova.png.asset.json";
 import { promoConfig, siteConfig, trackConversion } from "@/config/site";
 import { WhatsAppButton } from "./WhatsAppButton";
 
