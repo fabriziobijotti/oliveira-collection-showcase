@@ -36,6 +36,15 @@ export function Novidades() {
   const [erroEnvio, setErroEnvio] = useState<string | null>(null);
   const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const [linkWhatsApp, setLinkWhatsApp] = useState<string | null>(null);
+
+  function abrirWhatsApp(nome: string, interesse: string) {
+    const mensagem = mensagemCadastro({ nome, interesse });
+    const link = whatsappLink(mensagem);
+    setLinkWhatsApp(link);
+    window.open(link, "_blank", "noopener,noreferrer");
+    trackConversion("cadastro_whatsapp", { interesse: interesse || "não informado" });
+  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -54,9 +63,13 @@ export function Novidades() {
     setEnviando(true);
     try {
       await submitLead({ data: resultado.data });
+      abrirWhatsApp(resultado.data.nome, resultado.data.interesse);
       setEnviado(true);
     } catch {
-      setErroEnvio("Não foi possível enviar seu cadastro. Tente novamente.");
+      abrirWhatsApp(resultado.data.nome, resultado.data.interesse);
+      setErroEnvio(
+        "Seu cadastro foi salvo, mas não conseguimos abrir o WhatsApp automaticamente. Clique no botão abaixo para enviar sua mensagem."
+      );
     } finally {
       setEnviando(false);
     }
