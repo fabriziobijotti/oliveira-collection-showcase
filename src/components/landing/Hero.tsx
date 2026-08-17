@@ -1,5 +1,5 @@
 import { Gift } from "lucide-react";
-import heroImg from "@/assets/hero-look.jpg.asset.json";
+import heroImg from "@/assets/hero-look-nova.png.asset.json";
 import { promoConfig, siteConfig, trackConversion } from "@/config/site";
 import { WhatsAppButton } from "./WhatsAppButton";
 
@@ -68,7 +68,7 @@ export function Hero() {
           <div className="overflow-hidden rounded-[2rem] shadow-[var(--shadow-elegant)]">
             <img
               src={heroImg.url}
-              alt="Look da nova coleção Primavera–Verão da Sheila Oliveira Store"
+              alt="Modelo vestindo look azul claro da nova coleção Primavera–Verão da Sheila Oliveira Store"
               width={1280}
               height={1600}
               fetchPriority="high"
