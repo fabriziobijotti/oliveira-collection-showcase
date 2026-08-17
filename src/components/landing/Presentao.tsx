@@ -14,14 +14,14 @@ export function Presentao() {
             <BolsasCarrossel />
             <span className="absolute -top-4 left-6 z-10 inline-flex items-center gap-2 rounded-full bg-card px-4 py-2 text-[11px] uppercase tracking-[0.18em] text-primary shadow-[var(--shadow-soft)]">
               <Gift size={14} strokeWidth={1.5} aria-hidden />
-              🎁 Presente exclusivo de lançamento
+              PRESENTE EXCLUSIVO DE LANÇAMENTO
             </span>
           </div>
         </Reveal>
 
         <Reveal delay={120}>
           <p className="text-xs uppercase tracking-[0.22em] text-primary">
-            🎁 Presente exclusivo de lançamento
+            PRESENTE EXCLUSIVO DE LANÇAMENTO
           </p>
           <h2 className="mt-4 font-display text-3xl leading-tight text-foreground sm:text-4xl lg:text-5xl">
             Seu look novo vem com um presente especial
