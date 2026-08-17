@@ -46,7 +46,7 @@ export const siteConfig = {
  * ============================================================
  */
 export const promoConfig = {
-  nome: "🎁 PRESENTE EXCLUSIVO DE LANÇAMENTO",
+  nome: "PRESENTE EXCLUSIVO DE LANÇAMENTO",
   valorMinimo: "R$ 250",
   brinde: "Mini Bolsa exclusiva",
 
