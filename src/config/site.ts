@@ -89,6 +89,22 @@ export function whatsappLink(mensagem: string = siteConfig.mensagens.padrao) {
   return `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 }
 
+/** Monta a mensagem que o cliente envia após se cadastrar no formulário. */
+export function mensagemCadastro({
+  nome,
+  interesse,
+}: {
+  nome: string;
+  interesse?: string | null;
+}) {
+  const linhas = [
+    `Olá! Sou ${nome} e me cadastrei pelo site da ${siteConfig.nome}.`,
+    interesse ? `Tenho interesse em: ${interesse}.` : null,
+    "Gostaria de receber as novidades da coleção Primavera–Verão.",
+  ];
+  return linhas.filter(Boolean).join("\n");
+}
+
 /**
  * Ponto único para registrar eventos de conversão (Meta Pixel, GA4, etc.).
  * Basta implementar o envio aqui futuramente.
