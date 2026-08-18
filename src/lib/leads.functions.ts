@@ -9,7 +9,6 @@ export const saveLead = createServerFn({ method: "POST" })
     const { error } = await supabaseAdmin.from("leads").insert({
       nome: data.nome || "Não informado",
       whatsapp: data.whatsapp,
-      email: data.email || null,
       interesse: data.interesse || null,
       consentimento: data.consentimento,
     });
