@@ -92,16 +92,23 @@ export function whatsappLink(_mensagem: string = siteConfig.mensagens.padrao) {
   return martecWhatsappLink;
 }
 
+/** Link direto do WhatsApp (wa.me) com mensagem pré-preenchida. */
+export function whatsappLinkDireto(mensagem: string = siteConfig.mensagens.padrao) {
+  return `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(mensagem)}`;
+}
+
 /** Monta a mensagem que o cliente envia após se cadastrar no formulário. */
 export function mensagemCadastro({
   nome,
   interesse,
 }: {
-  nome: string;
+  nome?: string | null;
   interesse?: string | null;
 }) {
   const linhas = [
-    `Olá! Sou ${nome} e me cadastrei pelo site da ${siteConfig.nome}.`,
+    nome
+      ? `Olá! Sou ${nome} e me cadastrei pelo site da ${siteConfig.nome}.`
+      : `Olá! Me cadastrei pelo site da ${siteConfig.nome}.`,
     interesse ? `Tenho interesse em: ${interesse}.` : null,
     "Gostaria de receber as novidades da coleção Primavera–Verão.",
   ];
