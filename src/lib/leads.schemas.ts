@@ -6,7 +6,6 @@ export const leadSchema = z.object({
     .string()
     .trim()
     .regex(/^\(\d{2}\) \d{4,5}-\d{4}$/, { message: "Informe um WhatsApp válido com DDD." }),
-  email: z.string().trim().email({ message: "E-mail inválido." }).optional().or(z.literal("")),
   interesse: z.string().max(60).optional(),
   consentimento: z.literal(true, {
     errorMap: () => ({ message: "É necessário autorizar o contato." }),
