@@ -127,8 +127,21 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+const MARTEC_SNIPPET_SRC = "https://martec.app/api/v1/snippet.js";
+const MARTEC_KEY =
+  "mtk_pub_cbb045d84aab04748e56d2849358460b6184a417b4774d4ae940425e64cd21d8";
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    if (document.querySelector(`script[src="${MARTEC_SNIPPET_SRC}"]`)) return;
+    const script = document.createElement("script");
+    script.src = MARTEC_SNIPPET_SRC;
+    script.async = true;
+    script.setAttribute("data-key", MARTEC_KEY);
+    document.body.appendChild(script);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
