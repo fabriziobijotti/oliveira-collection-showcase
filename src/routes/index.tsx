@@ -13,7 +13,7 @@ import { Entrega } from "@/components/landing/Entrega";
 import { CtaFinal } from "@/components/landing/CtaFinal";
 import { Faq, perguntas } from "@/components/landing/Faq";
 import { Footer } from "@/components/landing/Footer";
-import { WhatsAppFloat } from "@/components/landing/WhatsAppFloat";
+
 
 const titulo = "Coleção Primavera–Verão | Sheila Oliveira Store";
 const descricao =
@@ -70,7 +70,7 @@ function Index() {
         <Faq />
       </main>
       <Footer />
-      <WhatsAppFloat />
+      
     </div>
   );
 }

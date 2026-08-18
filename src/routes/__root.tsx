@@ -118,6 +118,10 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         {children}
         <Scripts />
+        <script
+          src="https://martec.app/api/v1/snippet.js"
+          data-key="mtk_pub_cbb045d84aab04748e56d2849358460b6184a417b4774d4ae940425e64cd21d8"
+        />
       </body>
     </html>
   );

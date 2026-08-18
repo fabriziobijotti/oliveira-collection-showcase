@@ -84,9 +84,12 @@ export const promoConfig = {
 } as const;
 
 
-/** Monta o link do WhatsApp com mensagem pré-preenchida. */
-export function whatsappLink(mensagem: string = siteConfig.mensagens.padrao) {
-  return `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(mensagem)}`;
+/** Link rastreável da Martec usado em todos os botões de WhatsApp. */
+export const martecWhatsappLink = "https://martec.app/t/sheilaoliveirastore/r/lp1-colecao-pv-26";
+
+/** Todos os botões de WhatsApp apontam para o link rastreável da Martec. */
+export function whatsappLink(_mensagem: string = siteConfig.mensagens.padrao) {
+  return martecWhatsappLink;
 }
 
 /** Monta a mensagem que o cliente envia após se cadastrar no formulário. */

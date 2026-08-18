@@ -2,8 +2,9 @@ import { useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { leadSchema } from "@/lib/leads.schemas";
 import { saveLead } from "@/lib/leads.functions";
-import { mensagemCadastro, whatsappLink, trackConversion } from "@/config/site";
 import { Reveal } from "./Reveal";
+
+const MARTEC_KEY = "mtk_pub_cbb045d84aab04748e56d2849358460b6184a417b4774d4ae940425e64cd21d8";
 
 /** Máscara de telefone brasileiro: (00) 00000-0000 */
 function mascararTelefone(valor: string) {
@@ -36,15 +37,6 @@ export function Novidades() {
   const [erroEnvio, setErroEnvio] = useState<string | null>(null);
   const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
-  const [linkWhatsApp, setLinkWhatsApp] = useState<string | null>(null);
-
-  function abrirWhatsApp(nome: string, interesse: string) {
-    const mensagem = mensagemCadastro({ nome, interesse });
-    const link = whatsappLink(mensagem);
-    setLinkWhatsApp(link);
-    window.open(link, "_blank", "noopener,noreferrer");
-    trackConversion("cadastro_whatsapp", { interesse: interesse || "não informado" });
-  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -61,15 +53,45 @@ export function Novidades() {
     setErros({});
     setErroEnvio(null);
     setEnviando(true);
+
     try {
-      await submitLead({ data: resultado.data });
-      abrirWhatsApp(resultado.data.nome, resultado.data.interesse || "");
-      setEnviado(true);
+      try {
+        await submitLead({ data: resultado.data });
+      } catch {
+        // segue para o envio à Martec mesmo se o salvamento interno falhar
+      }
+
+      const martec = (
+        window as unknown as { martec?: { getTouchId?: () => string | undefined } }
+      ).martec;
+
+      const resposta = await fetch("https://martec.app/api/v1/leads/form-ingest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${MARTEC_KEY}`,
+        },
+        body: JSON.stringify({
+          phone: resultado.data.whatsapp,
+          consent: true,
+          name: resultado.data.nome || undefined,
+          email: resultado.data.email || undefined,
+          touch_id: (martec && martec.getTouchId && martec.getTouchId()) || undefined,
+          landing_page: window.location.href,
+        }),
+      });
+
+      if (resposta.status === 201) {
+        setEnviado(true);
+      } else if (resposta.status === 400) {
+        setErroEnvio(
+          "Confira o telefone informado e o consentimento antes de enviar novamente."
+        );
+      } else {
+        setErroEnvio("Não deu certo — tente de novo em instantes.");
+      }
     } catch {
-      abrirWhatsApp(resultado.data.nome, resultado.data.interesse || "");
-      setErroEnvio(
-        "Seu cadastro foi salvo, mas não conseguimos abrir o WhatsApp automaticamente. Clique no botão abaixo para enviar sua mensagem."
-      );
+      setErroEnvio("Não deu certo — tente de novo em instantes.");
     } finally {
       setEnviando(false);
     }
@@ -95,33 +117,21 @@ export function Novidades() {
           <div className="mt-10 rounded-[2rem] border border-border bg-card p-7 shadow-[var(--shadow-soft)] md:p-10">
             {enviado ? (
               <div className="py-10 text-center">
-                <p
-                  role="status"
-                  className="font-display text-xl leading-relaxed text-foreground"
-                >
-                  Tudo certo! Abrimos o WhatsApp com sua mensagem pronta — é só tocar em enviar.
+                <p role="status" className="font-display text-xl leading-relaxed text-foreground">
+                  Obrigada pelo seu cadastro! Em breve entraremos em contato pelo WhatsApp.
                 </p>
-                {linkWhatsApp && (
-                  <a
-                    href={linkWhatsApp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-base font-medium text-primary-foreground shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90"
-                  >
-                    Abrir conversa no WhatsApp
-                  </a>
-                )}
               </div>
             ) : (
               <form onSubmit={onSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
+                <input type="hidden" name="martec_touch_id" value="" readOnly />
+
                 <div className="sm:col-span-1">
                   <label htmlFor="nome" className="mb-2 block text-sm text-foreground">
-                    Nome *
+                    Nome <span className="text-muted-foreground">(opcional)</span>
                   </label>
                   <input
                     id="nome"
                     name="nome"
-                    required
                     maxLength={100}
                     value={valores.nome}
                     onChange={(e) => setValores({ ...valores, nome: e.target.value })}
@@ -140,7 +150,7 @@ export function Novidades() {
                   </label>
                   <input
                     id="whatsapp"
-                    name="whatsapp"
+                    name="phone"
                     inputMode="tel"
                     required
                     value={valores.whatsapp}
@@ -149,7 +159,7 @@ export function Novidades() {
                     }
                     aria-invalid={!!erros["whatsapp"]}
                     className={inputClass}
-                    placeholder="(11) 90000-0000"
+                    placeholder="(11) 99999-8888"
                   />
                   {erros["whatsapp"] && (
                     <p className="mt-1.5 text-xs text-destructive">{erros["whatsapp"]}</p>
@@ -209,8 +219,8 @@ export function Novidades() {
                       className="mt-1 h-4 w-4 shrink-0 accent-[oklch(0.55_0.09_25)]"
                     />
                     <span>
-                      Autorizo a Sheila Oliveira Store a entrar em contato comigo pelo WhatsApp para
-                      enviar novidades e informações sobre a coleção.
+                      Autorizo o contato por WhatsApp/e-mail e o tratamento dos meus dados
+                      conforme a Política de Privacidade.
                     </span>
                   </label>
                   {erros["consentimento"] && (
@@ -229,7 +239,7 @@ export function Novidades() {
                 <div className="sm:col-span-2">
                   <button
                     type="submit"
-                    disabled={enviando}
+                    disabled={enviando || !valores.consentimento}
                     className="w-full rounded-full bg-primary px-8 py-4 text-base font-medium text-primary-foreground shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90 disabled:opacity-60"
                   >
                     {enviando ? "Enviando..." : "Quero receber as novidades"}
