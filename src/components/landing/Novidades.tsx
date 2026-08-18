@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { leadSchema } from "@/lib/leads.schemas";
 import { saveLead } from "@/lib/leads.functions";
+import { mensagemCadastro, whatsappLinkDireto, trackConversion } from "@/config/site";
 import { Reveal } from "./Reveal";
 
 const MARTEC_KEY = "mtk_pub_cbb045d84aab04748e56d2849358460b6184a417b4774d4ae940425e64cd21d8";
@@ -29,7 +30,6 @@ export function Novidades() {
   const [valores, setValores] = useState({
     nome: "",
     whatsapp: "",
-    email: "",
     interesse: "",
     consentimento: false,
   });
@@ -37,6 +37,14 @@ export function Novidades() {
   const [erroEnvio, setErroEnvio] = useState<string | null>(null);
   const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const [linkWhatsApp, setLinkWhatsApp] = useState<string | null>(null);
+
+  function abrirWhatsApp(nome: string, interesse: string) {
+    const link = whatsappLinkDireto(mensagemCadastro({ nome, interesse }));
+    setLinkWhatsApp(link);
+    window.open(link, "_blank", "noopener,noreferrer");
+    trackConversion("cadastro_whatsapp", { interesse: interesse || "não informado" });
+  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -75,13 +83,13 @@ export function Novidades() {
           phone: resultado.data.whatsapp,
           consent: true,
           name: resultado.data.nome || undefined,
-          email: resultado.data.email || undefined,
           touch_id: (martec && martec.getTouchId && martec.getTouchId()) || undefined,
           landing_page: window.location.href,
         }),
       });
 
       if (resposta.status === 201) {
+        abrirWhatsApp(resultado.data.nome || "", resultado.data.interesse || "");
         setEnviado(true);
       } else if (resposta.status === 400) {
         setErroEnvio(
@@ -118,8 +126,18 @@ export function Novidades() {
             {enviado ? (
               <div className="py-10 text-center">
                 <p role="status" className="font-display text-xl leading-relaxed text-foreground">
-                  Obrigada pelo seu cadastro! Em breve entraremos em contato pelo WhatsApp.
+                  Tudo certo! Abrimos o WhatsApp com sua mensagem pronta — é só tocar em enviar.
                 </p>
+                {linkWhatsApp && (
+                  <a
+                    href={linkWhatsApp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-base font-medium text-primary-foreground shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90"
+                  >
+                    Abrir conversa no WhatsApp
+                  </a>
+                )}
               </div>
             ) : (
               <form onSubmit={onSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
@@ -163,26 +181,6 @@ export function Novidades() {
                   />
                   {erros["whatsapp"] && (
                     <p className="mt-1.5 text-xs text-destructive">{erros["whatsapp"]}</p>
-                  )}
-                </div>
-
-                <div className="sm:col-span-1">
-                  <label htmlFor="email" className="mb-2 block text-sm text-foreground">
-                    E-mail <span className="text-muted-foreground">(opcional)</span>
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    maxLength={255}
-                    value={valores.email}
-                    onChange={(e) => setValores({ ...valores, email: e.target.value })}
-                    aria-invalid={!!erros["email"]}
-                    className={inputClass}
-                    placeholder="seuemail@exemplo.com"
-                  />
-                  {erros["email"] && (
-                    <p className="mt-1.5 text-xs text-destructive">{erros["email"]}</p>
                   )}
                 </div>
 
