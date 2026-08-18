@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const leadSchema = z.object({
-  nome: z.string().trim().min(2, { message: "Informe seu nome." }).max(100),
+  nome: z.string().trim().max(100).optional().or(z.literal("")),
   whatsapp: z
     .string()
     .trim()
